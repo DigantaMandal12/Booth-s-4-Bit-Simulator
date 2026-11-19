@@ -1,26 +1,39 @@
 # Booth's 4-Bit Multiplication Algorithm Simulator
 
-**Group:** Group B | **Project Number:** 2 | **Subject Area:** Computer Organization and Architecture  
-**Live Project URL:** `[INSERT ACTUAL GITHUB PAGES URL]`
+An interactive, browser-based educational simulator that demonstrates **Booth's Multiplication Algorithm** for signed 4-bit binary integers (`-8` to `+7`). The project is built with HTML5, CSS3, and Vanilla JavaScript. It visualizes two's complement conversion, register updates (`A`, `Q`, `Q₋₁`, and `M`), addition/subtraction decisions, arithmetic right shifts, and the final 8-bit binary and decimal product across four iterations.
 
-## Project Introduction
-An interactive, browser-based educational simulator that demonstrates **Booth's Multiplication Algorithm** for signed 4-bit binary integers (`-8` to `+7`). Built purely with HTML5, CSS3, and Vanilla JavaScript, it visualizes two's complement conversion, bit-level register updates (`A`, `Q`, `Q₋₁`, `M`), addition/subtraction decisions, arithmetic right shifts, and the final 8-bit binary and decimal product across exactly four iterations.
+> **Live Demo:** [Open Booth's 4-Bit Multiplication Simulator](https://booths4bitmultiplicationsimulator.vercel.app/)
+
+## Algorithm Flowchart
+
+![Booth's Multiplication Algorithm Flowchart](assets/booths-algorithm-flowchart.png)
+
+## Project Details
+
+- **Group:** Group B
+- **Project Number:** 2
+- **Subject Area:** Computer Organization and Architecture
+- **Input Range:** Signed 4-bit integers (`-8` to `+7`)
+- **Iterations:** Exactly 4
 
 ## Features
-- **Strict Signed 4-Bit Input Validation:** Accepts only integers in `[-8, +7]` with live 4-bit two's complement binary preview.
-- **5-Bit Internal Accumulator & Sign-Extended M:** Prevents overflow on edge cases such as `-8 × -8 = +64`.
-- **Hardware Register Visualization:** Bit-cell display for `A` (5-bit internal), `Q` (4-bit), `Q₋₁` (1-bit), and `M` (4-bit).
-- **Interactive Controls:** Start Simulation, Reset, Next Step, Previous Step, Run All Steps, and Pause.
-- **4-Iteration Trace Table:** Displays `Q₀ Q₋₁`, selected operation, `A` before/after operation, `Q` and `Q₋₁` after shift, and plain-English explanations.
-- **Educational & Documentation Suite:** Dedicated `algorithm.html` guide, `about.html` overview, SVG block diagram & flowchart, and print-ready academic report.
+
+- **Signed 4-bit input validation:** Accepts integers in the range `[-8, +7]` and displays a live 4-bit two's complement preview.
+- **5-bit internal accumulator and sign-extended M:** Supports edge cases such as `-8 × -8 = +64` without losing the required intermediate sign bit.
+- **Register visualization:** Displays bit-level values for `A` (5-bit internal accumulator), `Q` (4-bit multiplier), `Q₋₁` (1-bit previous bit), and `M` (4-bit multiplicand).
+- **Interactive controls:** Start Simulation, Reset, Next Step, Previous Step, Run All Steps, and Pause.
+- **Four-iteration trace table:** Shows `Q₀ Q₋₁`, selected operation, accumulator values before and after the operation, `Q` and `Q₋₁` after shifting, and plain-English explanations.
+- **Learning resources:** Includes an algorithm guide, project overview, SVG diagrams, and a project report.
 
 ## Technologies Used
-- **HTML5** (Semantic multi-page structure)
-- **CSS3** (Dark navy & cyan/teal responsive Grid/Flexbox UI)
-- **Vanilla JavaScript (ES6+)** (Pure binary register simulation engine, zero external libraries)
-- **SVG** (Editable technical block diagram, flowchart, and architecture diagram)
+
+- **HTML5** — semantic multi-page structure
+- **CSS3** — responsive layout using Grid and Flexbox
+- **Vanilla JavaScript (ES6+)** — binary register simulation without external libraries
+- **SVG** — technical diagrams and flowcharts
 
 ## Folder Structure
+
 ```text
 Booths_4bit_Multiplication_Simulator/
 ├── index.html
@@ -35,61 +48,85 @@ Booths_4bit_Multiplication_Simulator/
 ├── assets/
 │   ├── block-diagram.svg
 │   ├── flowchart.svg
-│   └── architecture.svg
+│   ├── architecture.svg
+│   └── booths-algorithm-flowchart.png
 └── presentation/
     ├── VIDEO_SCRIPT.md
     ├── PRESENTATION_GUIDE.md
     └── TEST_CASES.md
 ```
 
-## Installation & How to Run Locally
-No installation, server, database, or API key is required.
-1. Download or clone the `Booths_4bit_Multiplication_Simulator` folder.
-2. Open `index.html` directly in any modern web browser (Chrome, Firefox, Edge, Safari).
-3. *(Optional)* Serve locally using any static server, e.g.:
-   ```bash
-   python3 -m http.server 8000
-   ```
-   Then open `http://localhost:8000/index.html`.
+*The folder structure above shows the intended project layout. Keep the files that are present in your actual repository; the PNG flowchart in this README is stored at `assets/booths-algorithm-flowchart.png`.*
+
+## Installation and Running Locally
+
+No package installation, database, or API key is required.
+
+1. Clone or download this repository.
+2. Open the project folder.
+3. Open `index.html` in a modern browser such as Chrome, Firefox, Edge, or Safari.
+
+Optionally, run a local static server from the project root:
+
+```bash
+python -m http.server 8000
+```
+
+Then visit [http://localhost:8000](http://localhost:8000).
 
 ## How to Use the Simulator
-1. Open `simulator.html` (or click **Open Simulator** on the Home page).
-2. Enter integer values between `-8` and `+7` for **Multiplicand (M)** and **Multiplier (Q)**.
-3. Observe the automatic 4-bit two's complement binary previews.
-4. Click **Start Simulation** to initialize `A = 00000`, `Q`, `Q₋₁ = 0`, and sign-extended `M`.
-5. Use **Next Step** / **Previous Step** to inspect each of the 4 iterations, or **Run All Steps** / **Pause** for automated playback.
-6. After Iteration 4, inspect the **Final 8-Bit Binary Product** and **Final Decimal Product**.
 
-## Algorithm Summary
-| `Q₀` | `Q₋₁` | Operation |
-| :---: | :---: | :--- |
-| `0` | `0` | No Operation (Arithmetic Right Shift only) |
-| `0` | `1` | `A = A + M` (then Arithmetic Right Shift) |
-| `1` | `0` | `A = A - M` (then Arithmetic Right Shift) |
-| `1` | `1` | No Operation (Arithmetic Right Shift only) |
+1. Open `simulator.html`, or select **Open Simulator** from the home page.
+2. Enter an integer from `-8` to `+7` for the **Multiplicand (M)** and **Multiplier (Q)**.
+3. Check the automatically generated 4-bit two's complement previews.
+4. Select **Start Simulation** to initialize `A = 00000`, `Q`, `Q₋₁ = 0`, and the sign-extended multiplicand `M`.
+5. Use **Next Step** and **Previous Step** to inspect the four iterations, or use **Run All Steps** and **Pause** for automatic playback.
+6. After the fourth iteration, inspect the final 8-bit binary product and decimal result.
 
-After 4 iterations, the final 8-bit product is formed from the **lower 4 bits of `A`** followed by **`Q`**.
+## Booth's Algorithm: Operation Rules
 
-## Verified Test Cases
-All **256 valid input combinations** (`M ∈ [-8, +7]`, `Q ∈ [-8, +7]`) passed exhaustive Node.js verification (`256/256 passed, 0 failed`), including:
+At each iteration, examine the pair `Q₀ Q₋₁`:
 
-| M | Q | Expected Decimal | Expected 8-Bit Binary | Status |
-| :---: | :---: | :---: | :---: | :---: |
-| -5 | 3 | -15 | `11110001` | PASS |
-| 3 | 2 | 6 | `00000110` | PASS |
-| -8 | -8 | 64 | `01000000` | PASS |
-| -8 | 7 | -56 | `11001000` | PASS |
-| 7 | 7 | 49 | `00110001` | PASS |
-| -4 | -3 | 12 | `00001100` | PASS |
-| 0 | 7 | 0 | `00000000` | PASS |
+| `Q₀ Q₋₁` | Operation before arithmetic right shift |
+|:---:|---|
+| `00` | No operation |
+| `01` | `A = A + M` |
+| `10` | `A = A - M` |
+| `11` | No operation |
 
-## GitHub Pages Deployment Instructions
-1. Create a new public repository on GitHub (e.g., `booths-4bit-simulator`).
-2. Upload all files and folders from `Booths_4bit_Multiplication_Simulator/` so `index.html` is in the repository root.
-3. Open your repository **Settings**.
-4. In the left sidebar, click **Pages**.
-5. Under **Build and deployment → Source**, select **Deploy from a branch**.
-6. Choose the **`main`** branch.
-7. Choose the **`/ (root)`** directory.
-8. Click **Save**.
-9. Wait 1–2 minutes, then open the published URL shown at the top of the Pages settings page and verify all pages, CSS, JS, and SVG diagrams load cleanly.
+After the selected operation, perform an **arithmetic right shift** on the combined `A`, `Q`, and `Q₋₁` registers, then decrement the sequence count. Repeat until all four iterations are complete.
+
+The final 8-bit product is obtained from the **lower 4 bits of `A` followed by all 4 bits of `Q`**.
+
+## Test Cases
+
+The project specification reports exhaustive verification of all 256 valid input combinations (`M` and `Q` each ranging from `-8` through `+7`). The following representative cases are included:
+
+| M | Q | Expected decimal product | Expected 8-bit binary |
+|:---:|:---:|:---:|:---:|
+| -5 | 3 | -15 | `11110001` |
+| 3 | 2 | 6 | `00000110` |
+| -8 | -8 | 64 | `01000000` |
+| -8 | 7 | -56 | `11001000` |
+| 7 | 7 | 49 | `00110001` |
+| -4 | -3 | 12 | `00001100` |
+| 0 | 7 | 0 | `00000000` |
+
+## Deployment
+
+The live application is hosted on Vercel:
+
+**[https://booths4bitmultiplicationsimulator.vercel.app/](https://booths4bitmultiplicationsimulator.vercel.app/)**
+
+To publish the static project using GitHub Pages instead:
+
+1. Push the project files to a public GitHub repository, with `index.html` in the repository root.
+2. Open the repository's **Settings** tab.
+3. Select **Pages** from the sidebar.
+4. Under **Build and deployment**, choose **Deploy from a branch**.
+5. Select the `main` branch and the `/ (root)` folder, then click **Save**.
+6. Open the published URL shown in the Pages settings and check that the HTML, CSS, JavaScript, and images load correctly.
+
+## Academic Note
+
+This simulator is intended as a learning aid for understanding signed binary multiplication and Booth's algorithm in Computer Organization and Architecture.
