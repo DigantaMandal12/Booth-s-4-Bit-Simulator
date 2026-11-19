@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 880" width="560" height="880" role="img" aria-label="Booth's 4-Bit Multiplication Block Diagram">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#22d3ee"/>
+    </marker>
+    <style>
+      .bg { fill: #0d1627; }
+      .box { fill: #162542; stroke: #22d3ee; stroke-width: 1.8; rx: 10; ry: 10; }
+      .box-accent { fill: #122a3a; stroke: #14b8a6; stroke-width: 2; rx: 10; ry: 10; }
+      .title { fill: #f1f5f9; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; text-anchor: middle; }
+      .label { fill: #e2e8f0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #94a3b8; font-family: 'Consolas', monospace; font-size: 11.5px; text-anchor: middle; }
+      .line { stroke: #22d3ee; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="560" height="880" rx="12"/>
+  <text x="280" y="34" class="title">Booth's 4-Bit Multiplication — System Block Diagram</text>
+
+  <!-- 1. User Input -->
+  <rect class="box" x="130" y="54" width="300" height="48"/>
+  <text x="280" y="77" class="label">User Input</text>
+  <text x="280" y="94" class="sub">Decimal M and Q</text>
+  <line class="line" x1="280" y1="102" x2="280" y2="128"/>
+
+  <!-- 2. Input Validation -->
+  <rect class="box" x="130" y="130" width="300" height="48"/>
+  <text x="280" y="153" class="label">Input Validation</text>
+  <text x="280" y="170" class="sub">Strict Signed 4-Bit Range: -8 to +7</text>
+  <line class="line" x1="280" y1="178" x2="280" y2="204"/>
+
+  <!-- 3. 4-bit Binary Conversion -->
+  <rect class="box" x="130" y="206" width="300" height="48"/>
+  <text x="280" y="229" class="label">4-bit Binary Conversion</text>
+  <text x="280" y="246" class="sub">Two's Complement M[3:0], Q[3:0] &amp; 5-bit Sign-Ext M</text>
+  <line class="line" x1="280" y1="254" x2="280" y2="280"/>
+
+  <!-- 4. Booth's Algorithm Controller -->
+  <rect class="box-accent" x="130" y="282" width="300" height="48"/>
+  <text x="280" y="305" class="label">Booth's Algorithm Controller</text>
+  <text x="280" y="322" class="sub">Inspects Q0 Q-1 Bit Pair (00, 01, 10, 11)</text>
+  <line class="line" x1="280" y1="330" x2="280" y2="356"/>
+
+  <!-- 5. A, Q, Q-1 Registers -->
+  <rect class="box" x="130" y="358" width="300" height="48"/>
+  <text x="280" y="381" class="label">A, Q, Q-1 Registers</text>
+  <text x="280" y="398" class="sub">A (5-bit: 00000) | Q (4-bit) | Q-1 (1-bit: 0)</text>
+  <line class="line" x1="280" y1="406" x2="280" y2="432"/>
+
+  <!-- 6. Addition / Subtraction Unit -->
+  <rect class="box-accent" x="130" y="434" width="300" height="48"/>
+  <text x="280" y="457" class="label">Addition / Subtraction Unit</text>
+  <text x="280" y="474" class="sub">01: A = A + M | 10: A = A - M | 00/11: No Op</text>
+  <line class="line" x1="280" y1="482" x2="280" y2="508"/>
+
+  <!-- 7. Arithmetic Right Shift -->
+  <rect class="box" x="130" y="510" width="300" height="48"/>
+  <text x="280" y="533" class="label">Arithmetic Right Shift</text>
+  <text x="280" y="550" class="sub">Shift [A, Q, Q-1] Right &amp; Preserve A Sign Bit</text>
+  <line class="line" x1="280" y1="558" x2="280" y2="584"/>
+
+  <!-- 8. Four Iterations -->
+  <rect class="box" x="130" y="586" width="300" height="48"/>
+  <text x="280" y="609" class="label">Four Iterations</text>
+  <text x="280" y="626" class="sub">Repeat Control Cycle Exactly 4 Times</text>
+  <line class="line" x1="280" y1="634" x2="280" y2="660"/>
+
+  <!-- 9. Final 8-bit Binary Output -->
+  <rect class="box-accent" x="130" y="662" width="300" height="48"/>
+  <text x="280" y="685" class="label">Final 8-bit Binary Output</text>
+  <text x="280" y="702" class="sub">Lower 4 bits of A + 4 bits of Q</text>
+  <line class="line" x1="280" y1="710" x2="280" y2="736"/>
+
+  <!-- 10. Decimal Result -->
+  <rect class="box" x="130" y="738" width="300" height="48"/>
+  <text x="280" y="761" class="label">Decimal Result</text>
+  <text x="280" y="778" class="sub">Signed 8-bit Two's Complement to Decimal</text>
+</svg>

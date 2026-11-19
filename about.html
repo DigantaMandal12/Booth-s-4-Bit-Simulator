@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Project | Booth's 4-Bit Multiplication Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-container" aria-label="Primary Navigation">
+      <a href="index.html" class="brand">
+        <span class="brand-badge">B4</span>
+        <span>Booth's 4-Bit Simulator</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="simulator.html">Simulator</a></li>
+        <li><a href="algorithm.html">Algorithm</a></li>
+        <li><a href="about.html" class="active">About Project</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="hero-tag">Academic Documentation • Group B • Project #2</span>
+      <h1>About This Mini Project</h1>
+      <p>
+        Complete technical overview, system requirements, limitations, and engineering methodology for the
+        Booth's 4-Bit Multiplication Algorithm Simulator.
+      </p>
+    </section>
+
+    <div class="grid-2">
+      <article class="card">
+        <h2>Project Overview</h2>
+        <p>
+          This Computer Organization and Architecture (COA) mini project implements an interactive,
+          browser-based simulator for <strong>Booth's Multiplication Algorithm</strong> restricted to
+          signed 4-bit operands (<code>-8</code> to <code>+7</code>). It bridges classroom theory and
+          register-level hardware execution by visualizing every arithmetic and shift step in real time.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>Project Objectives</h2>
+        <ul>
+          <li>Demonstrate signed 4-bit two's complement representation accurately.</li>
+          <li>Visualize internal 5-bit Accumulator <code>A</code>, 4-bit <code>Q</code>, 1-bit <code>Q₋₁</code>, and <code>M</code> registers.</li>
+          <li>Execute genuine bit-level binary addition, subtraction, and arithmetic right shifts.</li>
+          <li>Provide step-by-step forward/backward navigation and automated playback.</li>
+          <li>Deliver zero-dependency static hosting compatibility for GitHub Pages.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="grid-2" style="margin-top: 1.5rem;">
+      <article class="card">
+        <h2>Key Features</h2>
+        <ul>
+          <li>Strict validation for integer inputs in <code>[-8, +7]</code>.</li>
+          <li>Live 4-bit binary preview for both Multiplicand and Multiplier.</li>
+          <li>Full 4-iteration trace table with active-row highlighting.</li>
+          <li>5-bit internal accumulator &amp; sign-extended <code>M</code> to handle <code>M = -8</code> cleanly.</li>
+          <li>Dedicated educational guide, SVG block diagram, and flowchart.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Technology Stack</h2>
+        <ul>
+          <li><strong>Markup:</strong> HTML5 (semantic structure, accessible controls).</li>
+          <li><strong>Styling:</strong> CSS3 (CSS Grid, Flexbox, custom properties, responsive breakpoints).</li>
+          <li><strong>Logic:</strong> Vanilla JavaScript (ES6+, modular pure-binary arithmetic engine).</li>
+          <li><strong>Diagrams:</strong> Scalable Vector Graphics (SVG).</li>
+          <li><strong>Hosting:</strong> Static client-side execution / GitHub Pages.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="grid-2" style="margin-top: 1.5rem;">
+      <article class="card">
+        <h2>Hardware Requirements</h2>
+        <ul>
+          <li>Processor: Any modern dual-core CPU (x86_64 or ARM64).</li>
+          <li>RAM: Minimum 2 GB (for running a modern web browser).</li>
+          <li>Storage: Less than 5 MB free disk space.</li>
+          <li>Display: 360px mobile viewport up to 1920×1080+ desktop monitor.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Software Requirements</h2>
+        <ul>
+          <li>Operating System: Windows 10/11, macOS, Linux, Android, or iOS.</li>
+          <li>Web Browser: Google Chrome, Mozilla Firefox, Microsoft Edge, or Safari (ES6+ support).</li>
+          <li>Code Editor (Development): VS Code or any text editor.</li>
+          <li>Testing Runtime (Optional): Node.js v18+ for running the automated 256-case test suite.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="grid-2" style="margin-top: 1.5rem;">
+      <article class="card">
+        <h2>Project Limitations</h2>
+        <ul>
+          <li>Strictly scoped to signed 4-bit operands (<code>-8</code> to <code>+7</code>) as required by the project specification.</li>
+          <li>Does not include 8-bit, 16-bit, or floating-point multiplication modes.</li>
+          <li>Client-side only; simulation histories are not persisted to a backend database.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Future Improvements</h2>
+        <ul>
+          <li>Add selectable bit-width modes (8-bit and 16-bit) for advanced COA study.</li>
+          <li>Support Modified Booth (Radix-4) encoding comparison.</li>
+          <li>Add interactive quiz mode and downloadable CSV/PDF step traces.</li>
+        </ul>
+      </article>
+    </div>
+
+    <section class="card" style="margin-top: 1.5rem;">
+      <h2>Development Methodology &amp; Architecture</h2>
+      <p>
+        The project follows an iterative modular engineering workflow: separating presentation
+        (HTML5), visual design (CSS3), and bit-level computation (Vanilla JS). All 256 possible
+        input combinations (<code>16 × 16</code>) are verified against a mathematical oracle in Node.js.
+      </p>
+      <div class="diagram-frame" style="margin-top: 1rem;">
+        <img src="assets/architecture.svg" alt="Booth's 4-Bit Simulator System Architecture">
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    Booth's 4-Bit Multiplication Algorithm Simulator • Group B • Project #2 • Computer Organization &amp; Architecture
+  </footer>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booth's 4-Bit Multiplication Algorithm Simulator | Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-container" aria-label="Primary Navigation">
+      <a href="index.html" class="brand">
+        <span class="brand-badge">B4</span>
+        <span>Booth's 4-Bit Simulator</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="simulator.html">Simulator</a></li>
+        <li><a href="algorithm.html">Algorithm</a></li>
+        <li><a href="about.html">About Project</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="hero-tag">Computer Organization &amp; Architecture • Group B • Project #2</span>
+      <h1>Booth's Multiplication Algorithm Simulator (Signed 4-Bit)</h1>
+      <p>
+        An interactive educational web simulator designed to visualize signed 4-bit binary multiplication
+        using Booth's Algorithm. Observe two's complement conversion, register initialization,
+        addition/subtraction decisions, arithmetic right shifts, and final 8-bit product generation step by step.
+      </p>
+      <div class="cta-group">
+        <a href="simulator.html" class="btn btn-primary">Open Simulator</a>
+        <a href="algorithm.html" class="btn btn-secondary">Learn Algorithm</a>
+        <a href="about.html" class="btn btn-outline">About Project</a>
+      </div>
+    </section>
+
+    <div class="grid-2">
+      <article class="card">
+        <h2>Objective of Booth's Algorithm</h2>
+        <p>
+          Booth's Multiplication Algorithm provides a systematic hardware-level method to multiply two
+          signed binary integers represented in <strong>two's complement</strong> form without converting
+          negative operands to positive magnitudes first.
+        </p>
+        <p class="muted">
+          By inspecting consecutive multiplier bit pairs (<code>Q₀</code> and <code>Q₋₁</code>) across
+          four iterations, it reduces consecutive ones into a single subtraction and addition, making
+          signed arithmetic uniform and efficient in processor ALUs.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>Strict 4-Bit Signed Input Range</h2>
+        <p>
+          This simulator exclusively models <strong>signed 4-bit two's complement</strong> arithmetic:
+        </p>
+        <ul class="pill-list">
+          <li class="pill">Minimum Input: -8 (1000₂)</li>
+          <li class="pill">Maximum Input: +7 (0111₂)</li>
+          <li class="pill">Output Width: 8-bit (-56 to +64)</li>
+          <li class="pill">Iterations: Exactly 4 Cycles</li>
+        </ul>
+        <p class="muted" style="margin-top: 0.9rem;">
+          Internally, a 5-bit Accumulator (<code>A</code>) and sign-extended 5-bit Multiplicand (<code>M</code>)
+          prevent overflow during edge cases such as <code>-8 × -8 = +64</code>.
+        </p>
+      </article>
+    </div>
+
+    <h2 class="section-title">Key Simulator Features</h2>
+    <div class="grid-3">
+      <article class="card">
+        <h3>Live Binary Conversion</h3>
+        <p>
+          Automatically converts signed decimal inputs <code>M</code> and <code>Q</code> into 4-bit
+          two's complement binary representations as you type.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Bit-Level Register View</h3>
+        <p>
+          Displays 5-bit Accumulator <code>A</code>, 4-bit Multiplier <code>Q</code>, 1-bit <code>Q₋₁</code>,
+          and Multiplicand <code>M</code> with sign-bit and LSB highlighting.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Step-by-Step Controls</h3>
+        <p>
+          Start, Reset, step forward or backward through each iteration, or auto-play and pause all
+          four cycles with detailed explanations.
+        </p>
+      </article>
+    </div>
+
+    <div class="grid-2" style="margin-top: 1.5rem;">
+      <article class="card">
+        <h2>Example Multiplication: -5 × 3 = -15</h2>
+        <div class="example-box">
+          <div><strong>Multiplicand (M):</strong> -5 → <code>1011₂</code> (5-bit: <code>11011₂</code>)</div>
+          <div><strong>Multiplier (Q):</strong> &nbsp;&nbsp;3 → <code>0011₂</code></div>
+          <div><strong>Initial State:</strong> A = <code>00000</code>, Q = <code>0011</code>, Q₋₁ = <code>0</code></div>
+          <div style="margin-top: 0.5rem;"><strong>After 4 Iterations:</strong></div>
+          <div>Lower 4 bits of A = <code>1111</code>, Q = <code>0001</code></div>
+          <div style="margin-top: 0.5rem; color: #6ee7b7;">
+            <strong>Final 8-bit Product:</strong> <code>11110001₂</code> = <strong>-15₁₀</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Technology Stack Used</h2>
+        <p>
+          Built strictly with core web standards so it runs directly in any modern browser with zero
+          dependencies, servers, or databases:
+        </p>
+        <ul class="pill-list">
+          <li class="pill">HTML5 Semantic Markup</li>
+          <li class="pill">CSS3 Responsive Grid &amp; Flexbox</li>
+          <li class="pill">Vanilla JavaScript (ES6+)</li>
+          <li class="pill">Inline/Static SVG Diagrams</li>
+          <li class="pill">GitHub Pages Ready</li>
+        </ul>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    Booth's 4-Bit Multiplication Algorithm Simulator • Group B • Project #2 • Computer Organization &amp; Architecture
+  </footer>
+</body>
+</html>

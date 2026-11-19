@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Simulator | Booth's 4-Bit Multiplication</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-container" aria-label="Primary Navigation">
+      <a href="index.html" class="brand">
+        <span class="brand-badge">B4</span>
+        <span>Booth's 4-Bit Simulator</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="simulator.html" class="active">Simulator</a></li>
+        <li><a href="algorithm.html">Algorithm</a></li>
+        <li><a href="about.html">About Project</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Signed 4-Bit Booth's Algorithm Simulator</h2>
+      <p class="muted">
+        Enter signed integer values strictly in the range <strong>-8 to +7</strong>. The simulator uses a
+        5-bit internal Accumulator (<code>A</code>) and sign-extended 5-bit Multiplicand (<code>M</code>) to
+        accurately compute all 256 signed 4-bit combinations across 4 iterations.
+      </p>
+
+      <div id="sim-error" class="error-banner" role="alert"></div>
+
+      <div class="input-grid">
+        <div class="input-field-card">
+          <label for="input-m">Multiplicand (M) <span class="muted">[-8 to +7]</span></label>
+          <div class="input-row">
+            <input type="number" id="input-m" min="-8" max="7" step="1" value="-5" aria-label="Multiplicand M">
+            <span id="m-binary-preview" class="binary-preview">4-bit: 1011</span>
+          </div>
+        </div>
+
+        <div class="input-field-card">
+          <label for="input-q">Multiplier (Q) <span class="muted">[-8 to +7]</span></label>
+          <div class="input-row">
+            <input type="number" id="input-q" min="-8" max="7" step="1" value="3" aria-label="Multiplier Q">
+            <span id="q-binary-preview" class="binary-preview">4-bit: 0011</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-bar">
+        <button type="button" id="btn-start" class="btn btn-primary">Start Simulation</button>
+        <button type="button" id="btn-prev" class="btn btn-secondary" disabled>Previous Step</button>
+        <button type="button" id="btn-next" class="btn btn-secondary" disabled>Next Step</button>
+        <button type="button" id="btn-run-all" class="btn btn-outline" disabled>Run All Steps</button>
+        <button type="button" id="btn-pause" class="btn btn-warning" disabled>Pause</button>
+        <button type="button" id="btn-reset" class="btn btn-danger">Reset</button>
+      </div>
+
+      <div class="status-bar">
+        <span id="sim-status-text">Enter M and Q (-8 to +7) and click Start Simulation.</span>
+        <span id="sim-iter-badge" class="binary-preview">Iteration: 0 / 4</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Hardware Register Visualization</h2>
+      <div class="register-grid">
+        <div class="register-box">
+          <div class="register-label">Accumulator (A) — 5-bit</div>
+          <div id="reg-a-bits" class="bit-cells"></div>
+          <div id="reg-a-meta" class="register-meta">5-bit internal (00000)</div>
+        </div>
+
+        <div class="register-box">
+          <div class="register-label">Multiplier (Q) — 4-bit</div>
+          <div id="reg-q-bits" class="bit-cells"></div>
+          <div id="reg-q-meta" class="register-meta">4-bit (0000)</div>
+        </div>
+
+        <div class="register-box">
+          <div class="register-label">Previous Bit (Q₋₁) — 1-bit</div>
+          <div id="reg-qm1-bits" class="bit-cells"></div>
+          <div id="reg-qm1-meta" class="register-meta">1-bit (0)</div>
+        </div>
+
+        <div class="register-box">
+          <div class="register-label">Multiplicand (M) — 4-bit</div>
+          <div id="reg-m-bits" class="bit-cells"></div>
+          <div id="reg-m-meta" class="register-meta">4-bit (0000)</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Step-by-Step Execution (4 Iterations)</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Iter</th>
+              <th>Q₀ Q₋₁</th>
+              <th>Operation</th>
+              <th>A (Before)</th>
+              <th>A (After Op)</th>
+              <th>Q (After Shift)</th>
+              <th>Q₋₁ (After Shift)</th>
+              <th>Explanation</th>
+            </tr>
+          </thead>
+          <tbody id="steps-table-body">
+            <tr>
+              <td colspan="8" class="muted">Click "Start Simulation" to initialize registers and begin the 4 iterations.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="result-panel" class="result-panel" aria-live="polite">
+        <h3 style="color: #6ee7b7; margin-top: 0;">Simulation Complete — Final 8-Bit Product</h3>
+        <p id="res-message" style="margin-bottom: 0.75rem;"></p>
+        <div class="result-grid">
+          <div class="result-stat">
+            <div class="label">Final Decimal Product</div>
+            <div id="res-decimal" class="value">—</div>
+          </div>
+          <div class="result-stat">
+            <div class="label">Final 8-Bit Binary Product</div>
+            <div id="res-binary" class="value">—</div>
+          </div>
+          <div class="result-stat">
+            <div class="label">Final Register Values</div>
+            <div id="res-registers" class="value" style="font-size: 0.95rem;">—</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    Booth's 4-Bit Multiplication Algorithm Simulator • Group B • Project #2 • Computer Organization &amp; Architecture
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
