@@ -1,135 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Booth's 4-Bit Multiplication Algorithm Simulator | Home</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booth's Multiplication Algorithm Simulator — Digital Electronics Laboratory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="site-header">
-    <nav class="nav-container" aria-label="Primary Navigation">
-      <a href="index.html" class="brand">
-        <span class="brand-badge">B4</span>
-        <span>Booth's 4-Bit Simulator</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="simulator.html">Simulator</a></li>
-        <li><a href="algorithm.html">Algorithm</a></li>
-        <li><a href="about.html">About Project</a></li>
-      </ul>
-    </nav>
+  <header class="lab-header">
+    <div class="header-title-group">
+      <h1>Booth's Multiplication Algorithm Simulator</h1>
+      <p class="subtitle">4-bit Signed Binary Multiplication | Digital Electronics Laboratory</p>
+    </div>
+
+    <form id="input-form" class="input-controls" novalidate>
+      <div class="input-field">
+        <label for="input-m">Multiplicand M <span class="range-hint">(-8 to +7)</span></label>
+        <div class="input-with-bin">
+          <input type="number" id="input-m" min="-8" max="7" step="1" value="3" required />
+          <span id="preview-m" class="bin-preview">0011</span>
+        </div>
+      </div>
+
+      <div class="input-field">
+        <label for="input-q">Multiplier Q <span class="range-hint">(-8 to +7)</span></label>
+        <div class="input-with-bin">
+          <input type="number" id="input-q" min="-8" max="7" step="1" value="-4" required />
+          <span id="preview-q" class="bin-preview">1100</span>
+        </div>
+      </div>
+
+      <div class="input-actions">
+        <button type="submit" id="btn-load" class="btn btn-primary">Load Inputs</button>
+        <button type="button" id="btn-reset" class="btn btn-secondary">Reset</button>
+      </div>
+
+      <div id="validation-msg" class="validation-msg" role="alert" aria-live="polite"></div>
+    </form>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <span class="hero-tag">Computer Organization &amp; Architecture • Group B • Project #2</span>
-      <h1>Booth's Multiplication Algorithm Simulator (Signed 4-Bit)</h1>
-      <p>
-        An interactive educational web simulator designed to visualize signed 4-bit binary multiplication
-        using Booth's Algorithm. Observe two's complement conversion, register initialization,
-        addition/subtraction decisions, arithmetic right shifts, and final 8-bit product generation step by step.
-      </p>
-      <div class="cta-group">
-        <a href="simulator.html" class="btn btn-primary">Open Simulator</a>
-        <a href="algorithm.html" class="btn btn-secondary">Learn Algorithm</a>
-        <a href="about.html" class="btn btn-outline">About Project</a>
+  <main class="lab-workspace">
+    <!-- MAIN CENTER: Hardware Circuit SVG -->
+    <section class="circuit-panel" aria-label="Hardware Circuit Diagram">
+      <div class="panel-header">
+        <span class="panel-title">HARDWARE DATAPATH &amp; CONTROL SCHEMATIC</span>
+        <div class="wire-legend">
+          <span class="legend-item"><span class="swatch swatch-inactive"></span>Inactive</span>
+          <span class="legend-item"><span class="swatch swatch-active"></span>Active Bus / Shift</span>
+          <span class="legend-item"><span class="swatch swatch-add"></span>ADD</span>
+          <span class="legend-item"><span class="swatch swatch-sub"></span>SUB</span>
+          <span class="legend-item"><span class="swatch swatch-done"></span>DONE</span>
+        </div>
+      </div>
+      <div id="circuit-container" class="circuit-container"></div>
+      <div id="explanation-bar" class="explanation-bar">
+        Enter signed 4-bit inputs M and Q (-8 to +7) and click Load Inputs.
       </div>
     </section>
 
-    <div class="grid-2">
-      <article class="card">
-        <h2>Objective of Booth's Algorithm</h2>
-        <p>
-          Booth's Multiplication Algorithm provides a systematic hardware-level method to multiply two
-          signed binary integers represented in <strong>two's complement</strong> form without converting
-          negative operands to positive magnitudes first.
-        </p>
-        <p class="muted">
-          By inspecting consecutive multiplier bit pairs (<code>Q₀</code> and <code>Q₋₁</code>) across
-          four iterations, it reduces consecutive ones into a single subtraction and addition, making
-          signed arithmetic uniform and efficient in processor ALUs.
-        </p>
-      </article>
-
-      <article class="card">
-        <h2>Strict 4-Bit Signed Input Range</h2>
-        <p>
-          This simulator exclusively models <strong>signed 4-bit two's complement</strong> arithmetic:
-        </p>
-        <ul class="pill-list">
-          <li class="pill">Minimum Input: -8 (1000₂)</li>
-          <li class="pill">Maximum Input: +7 (0111₂)</li>
-          <li class="pill">Output Width: 8-bit (-56 to +64)</li>
-          <li class="pill">Iterations: Exactly 4 Cycles</li>
-        </ul>
-        <p class="muted" style="margin-top: 0.9rem;">
-          Internally, a 5-bit Accumulator (<code>A</code>) and sign-extended 5-bit Multiplicand (<code>M</code>)
-          prevent overflow during edge cases such as <code>-8 × -8 = +64</code>.
-        </p>
-      </article>
-    </div>
-
-    <h2 class="section-title">Key Simulator Features</h2>
-    <div class="grid-3">
-      <article class="card">
-        <h3>Live Binary Conversion</h3>
-        <p>
-          Automatically converts signed decimal inputs <code>M</code> and <code>Q</code> into 4-bit
-          two's complement binary representations as you type.
-        </p>
-      </article>
-      <article class="card">
-        <h3>Bit-Level Register View</h3>
-        <p>
-          Displays 5-bit Accumulator <code>A</code>, 4-bit Multiplier <code>Q</code>, 1-bit <code>Q₋₁</code>,
-          and Multiplicand <code>M</code> with sign-bit and LSB highlighting.
-        </p>
-      </article>
-      <article class="card">
-        <h3>Step-by-Step Controls</h3>
-        <p>
-          Start, Reset, step forward or backward through each iteration, or auto-play and pause all
-          four cycles with detailed explanations.
-        </p>
-      </article>
-    </div>
-
-    <div class="grid-2" style="margin-top: 1.5rem;">
-      <article class="card">
-        <h2>Example Multiplication: -5 × 3 = -15</h2>
-        <div class="example-box">
-          <div><strong>Multiplicand (M):</strong> -5 → <code>1011₂</code> (5-bit: <code>11011₂</code>)</div>
-          <div><strong>Multiplier (Q):</strong> &nbsp;&nbsp;3 → <code>0011₂</code></div>
-          <div><strong>Initial State:</strong> A = <code>00000</code>, Q = <code>0011</code>, Q₋₁ = <code>0</code></div>
-          <div style="margin-top: 0.5rem;"><strong>After 4 Iterations:</strong></div>
-          <div>Lower 4 bits of A = <code>1111</code>, Q = <code>0001</code></div>
-          <div style="margin-top: 0.5rem; color: #6ee7b7;">
-            <strong>Final 8-bit Product:</strong> <code>11110001₂</code> = <strong>-15₁₀</strong>
+    <!-- RIGHT SIDEBAR: Clock, Execution Controls & Live Control Unit Signals -->
+    <aside class="control-sidebar" aria-label="Simulation Controls">
+      <div class="sidebar-section">
+        <h2 class="section-heading">CLOCK &amp; STATE</h2>
+        <div class="status-grid">
+          <div class="status-item">
+            <span class="status-label">Iteration</span>
+            <span id="status-iteration" class="status-value mono">0 / 4</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Clock Edge</span>
+            <span id="status-edge" class="status-value mono">0 / 8</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Next Phase</span>
+            <span id="status-phase" class="status-value phase-badge">IDLE</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">DONE Latch</span>
+            <span id="status-done" class="status-value mono">0</span>
           </div>
         </div>
-      </article>
+      </div>
 
-      <article class="card">
-        <h2>Technology Stack Used</h2>
-        <p>
-          Built strictly with core web standards so it runs directly in any modern browser with zero
-          dependencies, servers, or databases:
-        </p>
-        <ul class="pill-list">
-          <li class="pill">HTML5 Semantic Markup</li>
-          <li class="pill">CSS3 Responsive Grid &amp; Flexbox</li>
-          <li class="pill">Vanilla JavaScript (ES6+)</li>
-          <li class="pill">Inline/Static SVG Diagrams</li>
-          <li class="pill">GitHub Pages Ready</li>
-        </ul>
-      </article>
-    </div>
+      <div class="sidebar-section">
+        <h2 class="section-heading">STEP &amp; CLOCK CONTROLS</h2>
+        <div class="control-buttons">
+          <button type="button" id="btn-clock" class="btn btn-primary btn-full">Clock Pulse (1 Edge)</button>
+          <div class="btn-row">
+            <button type="button" id="btn-prev" class="btn btn-secondary">Previous Step</button>
+            <button type="button" id="btn-next" class="btn btn-secondary">Next Step</button>
+          </div>
+          <div class="btn-row">
+            <button type="button" id="btn-run" class="btn btn-accent">Run Automatically</button>
+            <button type="button" id="btn-pause" class="btn btn-secondary" disabled>Pause</button>
+          </div>
+        </div>
+
+        <div class="speed-control">
+          <div class="speed-header">
+            <label for="speed-slider">Clock Speed</label>
+            <span id="speed-label" class="mono">600 ms/edge</span>
+          </div>
+          <input type="range" id="speed-slider" min="100" max="1500" step="50" value="600" />
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h2 class="section-heading">CONTROL UNIT SIGNALS</h2>
+        <div id="cu-signal-list" class="signal-list">
+          <div class="sig-row"><span>ADD</span><span id="sig-ADD" class="sig-val mono">0</span></div>
+          <div class="sig-row"><span>SUB</span><span id="sig-SUB" class="sig-val mono">0</span></div>
+          <div class="sig-row"><span>OP</span><span id="sig-OP" class="sig-val mono">0</span></div>
+          <div class="sig-row"><span>NOP</span><span id="sig-NOP" class="sig-val mono">1</span></div>
+          <div class="sig-row"><span>ENABLE_R</span><span id="sig-ENABLE_R" class="sig-val mono">0</span></div>
+          <div class="sig-row"><span>LOAD</span><span id="sig-LOAD" class="sig-val mono">0</span></div>
+          <div class="sig-row"><span>SHIFT</span><span id="sig-SHIFT" class="sig-val mono">0</span></div>
+          <div class="sig-row"><span>DONE</span><span id="sig-DONE" class="sig-val mono">0</span></div>
+        </div>
+      </div>
+    </aside>
   </main>
 
-  <footer class="site-footer">
-    Booth's 4-Bit Multiplication Algorithm Simulator • Group B • Project #2 • Computer Organization &amp; Architecture
-  </footer>
+  <!-- BOTTOM SECTION: Register Monitor, Final Result, Trace Table -->
+  <section class="bottom-section">
+    <div class="bottom-top-row">
+      <div class="monitor-card">
+        <h2 class="section-heading">HARDWARE REGISTER MONITOR</h2>
+        <div class="register-grid">
+          <div class="reg-item"><span class="reg-name">M (4-bit)</span><span id="mon-M" class="reg-val mono">0000</span></div>
+          <div class="reg-item"><span class="reg-name">A (4-bit)</span><span id="mon-A" class="reg-val mono">0000</span></div>
+          <div class="reg-item"><span class="reg-name">Q (4-bit)</span><span id="mon-Q" class="reg-val mono">0000</span></div>
+          <div class="reg-item"><span class="reg-name">Q-1 (1-bit)</span><span id="mon-Q_1" class="reg-val mono">0</span></div>
+          <div class="reg-item"><span class="reg-name">R (4-bit)</span><span id="mon-R" class="reg-val mono">0000</span></div>
+          <div class="reg-item"><span class="reg-name">C (2-bit)</span><span id="mon-C" class="reg-val mono">11</span></div>
+          <div class="reg-item"><span class="reg-name">V (Overflow)</span><span id="mon-V" class="reg-val mono">0</span></div>
+          <div class="reg-item"><span class="reg-name">SX (R3⊕V)</span><span id="mon-SX" class="reg-val mono">0</span></div>
+        </div>
+      </div>
+
+      <div class="result-card">
+        <h2 class="section-heading">FINAL MULTIPLICATION OUTPUT [A : Q]</h2>
+        <div id="final-result-body" class="final-result-body">
+          <p class="result-pending">Complete all 4 iterations (8 clock edges) to latch DONE = 1 and view verified 8-bit signed product.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="trace-card">
+      <h2 class="section-heading">EXECUTION HISTORY &amp; TRACE TABLE</h2>
+      <div class="table-wrapper">
+        <table class="trace-table">
+          <thead>
+            <tr>
+              <th>Iteration</th>
+              <th>Edge</th>
+              <th>Phase</th>
+              <th>Q0 Q-1</th>
+              <th>Operation</th>
+              <th>A Before</th>
+              <th>S / R</th>
+              <th>V</th>
+              <th>A After</th>
+              <th>Q</th>
+              <th>Q-1</th>
+              <th>C</th>
+            </tr>
+          </thead>
+          <tbody id="trace-tbody">
+            <tr class="empty-row">
+              <td colspan="12">No clock edges executed yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
